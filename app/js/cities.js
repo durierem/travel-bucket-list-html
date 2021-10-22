@@ -1,6 +1,6 @@
 import { Api } from './lib/api.js'
 
-const api = new Api('http://localhost:5000')
+const api = new Api('http://localhost:3000')
 
 export const getAll = async () => {
   return await api.get('/cities')
