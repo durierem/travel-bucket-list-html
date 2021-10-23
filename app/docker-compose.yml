@@ -1,12 +1,8 @@
-version: '3.8'
-
 services:
   app:
     image: caddy
     ports:
       - 80:80
-    environment:
-      - API_URL=http://localhost:3000
     volumes:
       - ./:/app
       - ./Caddyfile:/etc/caddy/Caddyfile

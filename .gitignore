@@ -1,4 +1,8 @@
+# Docker storage
 /docker
 
+# Node modules
 node_modules/
-.env
+
+# Secrets
+*.env

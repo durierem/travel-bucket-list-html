@@ -2,10 +2,11 @@
 
 ## API
 
-Set environment variables as desribed in `api/.env.example`.
-
-Start the server with `npm run server`.
+Whether you use MongoDB Atlas or the provided `api/docker-compose.yml` to run a
+local instance of MongoDB, set environment variables accordingly as described in
+`api/.env.example`.
 
 ## App
 
-Use VS Code live server or the provided `app/docker-compose.yml` to serve the app with Caddy.
+Use the provided `app/docker-compose.yml` to serve the app with Caddy. Then
+visit [http://localhost:80](http://localhost:80).

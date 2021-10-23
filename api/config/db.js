@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 import { config } from './config.js'
 
-mongoose.connect(`mongodb+srv://${config.db.url}/${config.db.name}`, {
+mongoose.connect(config.db.address, {
   user: config.db.user,
   pass: config.db.password,
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => console.log('Database OK'))
-  .catch(() => console.log('Database FAILED'))
+}).then(() => console.log('database: [OK]'))
+  .catch((error) => console.log(`database: [ERROR] ${error}`))

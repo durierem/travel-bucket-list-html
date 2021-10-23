@@ -1,0 +1,11 @@
+services:
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: node
+      MONGO_INITDB_ROOT_PASSWORD: node
+      MONGO_INITDB_DATABASE: bucket-list
+    ports:
+      - 27017:27017
+    volumes:
+      - ../docker/mongo/data:/data/db
