@@ -3,7 +3,8 @@
 import * as Cities from './cities.js'
 
 document.addEventListener('DOMContentLoaded', () => {
-  addFormEventListener()
+  addFormSubmitEventListener()
+  addVisistedCityEventListener()
   Cities.getAll()
     .then((cities) => {
       Cities.render(cities)
@@ -16,8 +17,20 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-const addFormEventListener = () => {
-  let form = document.getElementById('addform')
+const addVisistedCityEventListener = () => {
+  const checkbox = document.querySelector('input[name=visited]')
+  const formNext = document.querySelector('#form-next')
+  checkbox.addEventListener('click', () => {
+    if (checkbox.checked) {
+      formNext.classList.remove('is-hidden')
+    } else {
+      formNext.classList.add('is-hidden')
+    }
+  })
+}
+
+const addFormSubmitEventListener = () => {
+  const form = document.getElementById('addform')
   form.addEventListener('submit', (event) => {
     event.preventDefault()
     Cities.create({
@@ -28,7 +41,9 @@ const addFormEventListener = () => {
       unit: document.getElementsByName('inputCityDuration')[0].value,
       visited: form.visited.checked
     }).then((city) => {
+        form.reset()
         Cities.render([city])
       })
+      .catch((error) => console.error(error))
   })
 }

@@ -11,34 +11,73 @@ export const create = async (city) => {
 }
 
 export const render = (cities) => {
-  cities.forEach((city) => {
-    const tableBody = document.querySelector(`table#cities tbody`)
+  cities.map((city) => city.visited ? renderVisited(city) : renderPlanned(city))
+}
 
-    const template = document.querySelector('#city-template')
-    const newNode = template.cloneNode(true)
-    newNode.removeAttribute('id')
-    newNode.removeAttribute('class')
-    newNode.querySelector('.name').innerHTML = city.name
-    newNode.querySelector('.country').innerHTML = city.country
-    newNode.querySelector('.year').innerHTML = city.year
-    newNode.querySelector('.duration').innerHTML = `${city.duration} ${city.unit}`
-    newNode.querySelector('.visited').innerHTML = city.visited ? '✔️' : '❌'
-    newNode.querySelector('.button.is-danger').addEventListener('click', () => {
-      api.delete(`/cities/${city._id}`)
-        .then(() => newNode.remove())
-        .catch((error) => console.error(error))
-    })
-    newNode.querySelector('.button.is-success').addEventListener('click', () => {
-      api.patch(`/cities/${city._id}`, {
-        body: { visited: true }
-      }).then(() => {
-        newNode.querySelector('.visited').innerHTML = '✔️'
-      }).catch((error) => {
-        console.error(error)
-      })
+const renderVisited = (city) => {
+  const tbody = document.querySelector(`#visited-cities`)
+  const template = tbody.querySelector('#visited-city-template')
 
-    })
+  const newNode = template.cloneNode(true)
 
-    tableBody.appendChild(newNode)
+  // Remove template-only attributes
+  newNode.removeAttribute('id')
+  newNode.removeAttribute('class')
+
+  newNode.querySelector('[name=name]').innerHTML = city.name
+  newNode.querySelector('[name=country]').innerHTML = city.country
+  newNode.querySelector('[name=year]').innerHTML = city.year
+  newNode.querySelector('[name=duration]').innerHTML = `${city.duration} ${city.unit}`
+  newNode.querySelector('button[name=remove]').addEventListener('click', () => {
+    api.delete(`/cities/${city._id}`)
+      .then(() => newNode.remove())
+      .catch((error) => console.error(error))
   })
+  newNode.querySelector('input[type=checkbox]').addEventListener('click', (event) => {
+    newNode.remove()
+    if (event.target.checked) {
+      api.patch(`/cities/${city._id}`, { body: { visited: true } })
+        .then(() => document.querySelector('#visited-cities').appendChild(newNode))
+        .catch((error) => console.error(error))
+    } else {
+      api.patch(`/cities/${city._id}`, { body: { visited: false } })
+        .then(() => document.querySelector('#planned-cities').appendChild(newNode))
+        .catch((error) => console.error(error))
+    }
+  })
+
+  tbody.appendChild(newNode)
+}
+
+const renderPlanned = (city) => {
+  const tbody = document.querySelector(`#planned-cities`)
+  const template = tbody.querySelector('#planned-city-template')
+
+  const newNode = template.cloneNode(true)
+
+  // Remove template-only attributes
+  newNode.removeAttribute('id')
+  newNode.removeAttribute('class')
+
+  newNode.querySelector('[name=name]').innerHTML = city.name
+  newNode.querySelector('[name=country]').innerHTML = city.country
+  newNode.querySelector('button[name=remove]').addEventListener('click', () => {
+    api.delete(`/cities/${city._id}`)
+      .then(() => newNode.remove())
+      .catch((error) => console.error(error))
+  })
+  newNode.querySelector('input[type=checkbox]').addEventListener('click', (event) => {
+    newNode.remove()
+    if (event.target.checked) {
+      api.patch(`/cities/${city._id}`, { body: { visited: true } })
+        .then(() => document.querySelector('#visited-cities').appendChild(newNode))
+        .catch((error) => console.error(error))
+    } else {
+      api.patch(`/cities/${city._id}`, { body: { visited: false } })
+        .then(() => document.querySelector('#planned-cities').appendChild(newNode))
+        .catch((error) => console.error(error))
+    }
+  })
+
+  tbody.appendChild(newNode)
 }
