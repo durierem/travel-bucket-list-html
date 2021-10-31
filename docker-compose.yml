@@ -1,0 +1,35 @@
+services:
+  api:
+    image: node
+    ports:
+      - 3000:3000
+    environment:
+      NODE_ENV: development
+      DB_USER: node
+      DB_PASSWORD: node
+      DB_ADDRESS: mongodb://mongo:27017/?directConnection=true&serverSelectionTimeoutMS=2000
+    volumes:
+      - ./api:/app
+    working_dir: /app
+    command: node_modules/nodemon/bin/nodemon.js server.js
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: node
+      MONGO_INITDB_ROOT_PASSWORD: node
+      MONGO_INITDB_DATABASE: bucket-list
+    volumes:
+      - ./docker/mongo/data:/data/db
+
+  app:
+    image: caddy
+    ports:
+      - 80:80
+    volumes:
+      - ./app:/app
+      - ./app/Caddyfile:/etc/caddy/Caddyfile
+      - ./docker/caddy/data:/data
+      - ./docker/caddy/config:/config

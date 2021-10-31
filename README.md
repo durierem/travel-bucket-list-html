@@ -1,5 +1,7 @@
 # Travel bucket list
 
+The top level `docker-compose.yml` sets up everything :)
+
 ## API
 
 Whether you use MongoDB Atlas or the provided `api/docker-compose.yml` to run a
