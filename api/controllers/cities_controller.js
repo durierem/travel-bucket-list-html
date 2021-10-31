@@ -31,7 +31,7 @@ class CitiesController {
 
   destroy (request, response, _next) {
     City.deleteOne({ _id: request.params.id })
-      .then(() => response.status(204))
+      .then((deletedCount) => response.status(200).json(deletedCount))
       .catch(error => response.status(400).json({ error }))
   }
 }
