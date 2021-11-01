@@ -50,7 +50,7 @@ class City extends HTMLElement {
       this.querySelectorAll('[if=planned]').forEach((elem) => {
         elem.classList.add('is-hidden')
       })
-      this.querySelector('header').classList.add('has-background-success-light')
+      this.querySelector('header').classList.add('has-background-success')
       this.querySelector('[name=duration]').innerHTML = this.duration
       this.querySelector('[name=unit]').innerHTML = this.unit
       this.querySelector('[name=year]').innerHTML = this.year
@@ -61,7 +61,7 @@ class City extends HTMLElement {
       this.querySelectorAll('[if=visited]').forEach((elem) => {
         elem.classList.add('is-hidden')
       })
-      this.querySelector('header').classList.add('has-background-info-light')
+      this.querySelector('header').classList.add('has-background-dark')
     }
   }
 
@@ -82,7 +82,6 @@ class City extends HTMLElement {
       const form = modal.querySelector('form')
       form.addEventListener('submit', (e) => {
         e.preventDefault()
-        form.querySelector('button').classList.add('is-loading')
         const body = {
           visited: true,
           duration: form.duration.value,
@@ -97,6 +96,7 @@ class City extends HTMLElement {
               this.setAttribute(key, city[key])
             })
             modal.classList.remove('is-active')
+            form.reset()
           })
           .catch((error) => console.error(error))
       })

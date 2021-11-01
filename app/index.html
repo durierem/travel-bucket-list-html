@@ -11,64 +11,87 @@
 </head>
 
 <body>
-    <nav class="navbar is-transparent">
+    <nav class="navbar has-shadow is-dark">
         <div class="navbar-brand">
-            <h1 class="navbar-item title"><span class="m-3">✈️</span>My travel bucket list</h1>
+            <h1 class="navbar-item title is-1"><span class="m-3">✈️</span>My travel bucket list</h1>
         </div>
     </nav>
 
 
     <section class="section">
 
+        <h1 class="title">Add a new <b class="has-text-primary is-underlined">city</b> 👇</h1>
+
         <form name="new-city">
             <div class="level">
                 <div class="level-left">
                     <div class="level-item">
-                        <div class="control">
-                            <input type="text" name="city" class="input" placeholder="City" required>
+                        <div class="field">
+                            <label for="name" class="label">Name</label>
+                            <div class="control">
+                                <input type="text" name="name" id="name" class="input" placeholder="Tokyo" required>
+                            </div>
                         </div>
                     </div>
                     <div class="level-item">
-                        <div class="control">
-                            <input type="text" name="country" class="input" placeholder="Country" required>
-                        </div>
-                    </div>
-                    <div class="level-item">
-                        <label class="checkbox">
-                            <input type="checkbox" name="visited">
-                            I've visited this city!
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="form-next" class="level is-hidden">
-                <div class="level-left">
-                    <div class="level-item">
-                        <div class="control">
-                            <input type="number" name="year" class="input" placeholder="Year">
-                        </div>
-                    </div>
-                    <div class="level-item">
-                        <div class="control">
-                            <input type="number" name="duration" class="input" placeholder="Duration">
-                        </div>
-                    </div>
-                    <div class="level-item">
-                        <div class="control">
-                            <div class="select">
-                                <select name="unit">
-                                    <option value="" disabled selected>Select a duration unit</option>
-                                    <option value="days">Days</option>
-                                    <option value="weeks">Weeks</option>
-                                    <option value="months">Months</option>
-                                    <option value="years">Years</option>
-                                </select>
+                        <div class="field">
+                            <label for="country" class="label">Country</label>
+                            <div class="control">
+                                <input type="text" id="country" name="country" class="input" placeholder="Japan" required>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        <div class="field">
+                            <label for="visited" class="checkbox">
+                                <input type="checkbox" id="visited" name="visited">
+                                I've visited this city!
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <fieldset disabled="disabled" class="level is-hidden">
+                <div class="level-left">
+                    <div class="level-item">
+                        <div class="field">
+                            <label for="year" class="label">Year</label>
+                            <div class="control">
+                                <input type="number" id="year" name="year" class="input" placeholder="2018" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="level-item">
+                        <div class="field">
+                            <label for="duration" class="label">Duration</label>
+                            <div class="control">
+                                <input type="number" id="duration" name="duration" class="input" placeholder="2" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="level-item">
+                        <div class="field">
+                            <label for="unit" class="label">Unit</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select id="unit" name="unit" required>
+                                        <option value="" disabled selected>Select a duration unit</option>
+                                        <option value="days">Days</option>
+                                        <option value="weeks">Weeks</option>
+                                        <option value="months">Months</option>
+                                        <option value="years">Years</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
 
             <div class="level">
                 <div class="level-left">
@@ -91,55 +114,51 @@
     <div id="update-modal" class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-title">
-                        Cool! When did that happen?
+            <div class="box">
+                <form name="visited-city">
+                    <div class="field">
+                        <label for="visited-city-year" class="label">Year</label>
+                        <div class="control">
+                            <input type="number" id="visited-city-year" name="year" class="input" placeholder="2018" required>
+                        </div>
                     </div>
-                    <div class="card-header-icon">
-                        <button class="modal-close is-large" aria-label="close"></button>
+                    <div class="field">
+                        <label for="visited-city-duration" class="label">Duration</label>
+                        <div class="control">
+                            <input type="number" id="visited-city-duration" name="duration" class="input" placeholder="2" required>
+                        </div>
                     </div>
-                </div>
-                <div class="card-content">
-                    <form data-city-id="">
-                        <div class="field">
-                            <div class="control">
-                                <input type="number" name="year" class="input" placeholder="Year" required>
+                    <div class="field">
+                        <label for="visited-city-unit" class="label">Unit</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="visited-city-unit" name="unit" required>
+                                    <option value="" disabled selected>Select a duration unit</option>
+                                    <option value="days">Days</option>
+                                    <option value="weeks">Weeks</option>
+                                    <option value="months">Months</option>
+                                    <option value="years">Years</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="field">
-                            <div class="control">
-                                <input type="number" name="duration" class="input" placeholder="Duration" required>
-                            </div>
-                        </div>
-                        <div class="is-flex is-justify-content-space-between">
-                            <div class="field">
-                                <div class="control">
-                                    <div class="select">
-                                        <select name="unit" required>
-                                            <option value="" disabled selected>Select a duration unit</option>
-                                            <option value="days">Days</option>
-                                            <option value="weeks">Weeks</option>
-                                            <option value="months">Months</option>
-                                            <option value="years">Years</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="field is-flex is-justify-content-end">
+                        <div class="control">
                             <button type="submit" class="button is-primary">
                                 I've visited this city!
                             </button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
+        <button type="button" class="modal-close is-large"></button>
     </div>
 
     <template id="city-template">
         <div class="card mr-4 mb-4">
             <header class="card-header">
-                <div class="card-header-title">
+                <div class="card-header-title has-text-white">
                     <span class="mx-1" name="city">City</span>
                     (<span class="is-uppercase has-text-info" name="country">Country</span>)
                 </div>
@@ -162,6 +181,5 @@
             </footer>
         </div>
     </template>
-
 </body>
 </html>

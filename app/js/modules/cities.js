@@ -13,7 +13,7 @@ const handleCreationForm = () => {
     e.preventDefault()
     api.post('/cities', {
       body: {
-        name: form.city.value,
+        name: form.name.value,
         country: form.country.value,
         year: form.year.value,
         duration: form.duration.value,
@@ -28,12 +28,14 @@ const handleCreationForm = () => {
   })
 
   const checkbox = document.querySelector('input[name=visited]')
-  const formNext = document.querySelector('#form-next')
+  const formNext = form.querySelector('fieldset[disabled]')
   checkbox.addEventListener('click', () => {
     if (checkbox.checked) {
       formNext.classList.remove('is-hidden')
+      formNext.removeAttribute('disabled')
     } else {
       formNext.classList.add('is-hidden')
+      formNext.setAttribute('disabled', 'disabled')
     }
   })
 }
