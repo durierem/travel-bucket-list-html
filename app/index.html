@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Travel bucket list</title>
+    <title>My travel bucket list</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
-    <script src="./js/main.js" type="module"></script>
+    <script type="module" src="./js/main.js"></script>
 </head>
 
 <body>
@@ -19,22 +20,22 @@
 
     <section class="section">
 
-        <form id="addform" name="addform" class=>
+        <form name="new-city">
             <div class="level">
                 <div class="level-left">
                     <div class="level-item">
                         <div class="control">
-                            <input type="text" name="city" class="input" id="inputCityCountry" placeholder="City">
+                            <input type="text" name="city" class="input" placeholder="City" required>
                         </div>
                     </div>
                     <div class="level-item">
                         <div class="control">
-                            <input type="text" name="country" class="input" id="inputCityCountry" placeholder="Country">
+                            <input type="text" name="country" class="input" placeholder="Country" required>
                         </div>
                     </div>
                     <div class="level-item">
                         <label class="checkbox">
-                            <input type="checkbox" id="visited" name="visited">
+                            <input type="checkbox" name="visited">
                             I've visited this city!
                         </label>
                     </div>
@@ -45,19 +46,19 @@
                 <div class="level-left">
                     <div class="level-item">
                         <div class="control">
-                            <input type="number" name="year" class="input" id="inputTravelYear" placeholder="Year">
+                            <input type="number" name="year" class="input" placeholder="Year">
                         </div>
                     </div>
                     <div class="level-item">
                         <div class="control">
-                            <input type="number" name="duration" class="input" id="inputCityDuration" placeholder="Duration">
+                            <input type="number" name="duration" class="input" placeholder="Duration">
                         </div>
                     </div>
                     <div class="level-item">
                         <div class="control">
                             <div class="select">
-                                <select name="inputCityDuration" name="unit">
-                                    <option slected disabled>Select a duration unit</option>
+                                <select name="unit">
+                                    <option value="" disabled selected>Select a duration unit</option>
                                     <option value="days">Days</option>
                                     <option value="weeks">Weeks</option>
                                     <option value="months">Months</option>
@@ -82,46 +83,85 @@
 
     <section class="section">
 
-        <table id="cities" class="table is-fullwidth">
-            <tbody id="planned-cities">
-                <tr id="planned-city-template" class="is-hidden">
-                    <td name="name"></td>
-                    <td name="country"></td>
-                    <td name="actions" colspan="3">
-                        <div class="is-pulled-right is-flex is-align-items-center">
-                            <label class="checkbox has-text-success mx-1">
-                                <input name="visit" type="checkbox">
-                                Done!
-                            </label>
-                            <button name="remove" class="button is-danger is-inverted mx-1">Remove</button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-
-            <tbody id="visited-cities">
-                <tr>
-                    <td colspan="5" id="status" class="has-text-centered">Loading... ✈️</td>
-                </tr>
-                <tr id="visited-city-template" class="is-hidden">
-                    <td name="name"></td>
-                    <td name="country"></td>
-                    <td name="year"></td>
-                    <td name="duration"></td>
-                    <td name="actions">
-                        <div class="is-pulled-right is-flex is-align-items-center">
-                            <label class="checkbox has-text-success mx-1">
-                                <input name="visit" type="checkbox" checked>
-                                Done!
-                            </label>
-                            <button name="remove" class="button is-danger is-inverted mx-1">Remove</button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="cities-container" class="is-flex is-flex-wrap-wrap">
+        </div>
 
     </section>
+
+    <div id="update-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        Cool! When did that happen?
+                    </div>
+                    <div class="card-header-icon">
+                        <button class="modal-close is-large" aria-label="close"></button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <form data-city-id="">
+                        <div class="field">
+                            <div class="control">
+                                <input type="number" name="year" class="input" placeholder="Year" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input type="number" name="duration" class="input" placeholder="Duration" required>
+                            </div>
+                        </div>
+                        <div class="is-flex is-justify-content-space-between">
+                            <div class="field">
+                                <div class="control">
+                                    <div class="select">
+                                        <select name="unit" required>
+                                            <option value="" disabled selected>Select a duration unit</option>
+                                            <option value="days">Days</option>
+                                            <option value="weeks">Weeks</option>
+                                            <option value="months">Months</option>
+                                            <option value="years">Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="button is-primary">
+                                I've visited this city!
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="city-template">
+        <div class="card mr-4 mb-4">
+            <header class="card-header">
+                <div class="card-header-title">
+                    <span class="mx-1" name="city">City</span>
+                    (<span class="is-uppercase has-text-info" name="country">Country</span>)
+                </div>
+            </header>
+            <div class="card-content has-text-centered">
+                <div if="visited" class="is-hidden">
+                    <span name="duration">2</span> <span name="unit">weeks</span> in <span name="year">2018</span>
+                </div>
+                <div if="planned" class="is-hidden">
+                    <span>Yet to be seen 👀</span>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <button if="planned" type="button" name="visited" class="card-footer-item button is-success is-inverted is-hidden">
+                    Visited!
+                </button>
+                <button type="button" name="remove" class="card-footer-item button is-fullwidth is-danger is-inverted">
+                    Remove
+                </button>
+            </footer>
+        </div>
+    </template>
 
 </body>
 </html>
